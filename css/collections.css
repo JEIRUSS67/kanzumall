@@ -1,0 +1,221 @@
+/* ============================================================
+   COLLECTIONS.CSS — Kanzumall Collection Grid
+   ============================================================
+   Featured collections displayed in an asymmetric grid with
+   hover-reveal content, image zoom, and overlay transitions.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   SECTION
+   ---------------------------------------------------------- */
+.collections {
+  padding: var(--section-padding);
+  background: var(--color-obsidian);
+}
+
+/* ----------------------------------------------------------
+   GRID LAYOUT
+   ---------------------------------------------------------- */
+.collections__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* First card spans 2 columns for visual hierarchy */
+.collections__grid .collection-card:first-child {
+  grid-column: span 2;
+}
+
+/* ----------------------------------------------------------
+   COLLECTION CARD
+   ---------------------------------------------------------- */
+.collection-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  cursor: pointer;
+  aspect-ratio: 4 / 5;
+  background: var(--color-chocolate);
+}
+
+/* First card uses wider aspect ratio */
+.collections__grid .collection-card:first-child {
+  aspect-ratio: 16 / 9;
+}
+
+/* Card image — wrapper fills the card, img inside covers it */
+.collection-card__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.collection-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.7);
+}
+
+.collection-card:hover .collection-card__image img {
+  transform: scale(1.05);
+  filter: brightness(0.5);
+}
+
+/* Placeholder inside the image wrapper */
+.collection-card__image .product-placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+/* Gradient overlay — darkens bottom for text readability */
+.collection-card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(21, 19, 17, 0.9) 0%,
+    transparent 60%
+  );
+  z-index: 2;
+}
+
+/* ----------------------------------------------------------
+   CARD CONTENT / OVERLAY — Text at the bottom
+   The JS renders content inside .collection-card__overlay.
+   ---------------------------------------------------------- */
+.collection-card__overlay,
+.collection-card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 2rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(
+    to top,
+    rgba(21, 19, 17, 0.9) 0%,
+    rgba(21, 19, 17, 0.3) 40%,
+    transparent 60%
+  );
+}
+
+.collection-card__overlay .collection-card__label,
+.collection-card__overlay .collection-card__title,
+.collection-card__overlay .collection-card__count,
+.collection-card__overlay .collection-card__description {
+  transform: translateY(8px);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.collection-card:hover .collection-card__overlay .collection-card__label,
+.collection-card:hover .collection-card__overlay .collection-card__title,
+.collection-card:hover .collection-card__overlay .collection-card__count,
+.collection-card:hover .collection-card__overlay .collection-card__description {
+  transform: translateY(0);
+}
+
+/* Collection label */
+.collection-card__label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Collection title */
+.collection-card__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+/* Item count / action text */
+.collection-card__count {
+  font-size: 0.8rem;
+  color: rgba(245, 240, 230, 0.5);
+}
+
+/* Description text */
+.collection-card__description {
+  font-size: 0.82rem;
+  color: rgba(245, 240, 230, 0.55);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  display: none;
+}
+
+.collection-card:hover .collection-card__description {
+  display: block;
+}
+
+/* ----------------------------------------------------------
+   ARROW INDICATOR — appears on hover
+   ---------------------------------------------------------- */
+.collection-card__arrow {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(212, 180, 106, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: all 0.3s ease;
+  color: var(--color-gold);
+  opacity: 0;
+}
+
+.collection-card:hover .collection-card__arrow {
+  opacity: 1;
+  border-color: var(--color-gold);
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVE — Tablet (below 1024px)
+   ---------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .collections__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collections__grid .collection-card:first-child {
+    grid-column: span 2;
+  }
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVE — Mobile (below 768px)
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .collections__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collections__grid .collection-card:first-child {
+    grid-column: span 1;
+    aspect-ratio: 4 / 5;
+  }
+}
