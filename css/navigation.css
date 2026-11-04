@@ -1,0 +1,248 @@
+/* ============================================================
+   NAVIGATION.CSS — Kanzumall Fixed Navigation & Mobile Menu
+   ============================================================
+   Fixed top navigation bar with scroll-aware background,
+   desktop links, hamburger toggle, and full-screen mobile menu.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   MAIN NAV BAR
+   ---------------------------------------------------------- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, border-bottom-color 0.4s ease;
+}
+
+/* Scrolled state — frosted glass effect */
+.nav.is-scrolled {
+  background: rgba(21, 19, 17, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: rgba(212, 180, 106, 0.1);
+}
+
+/* ----------------------------------------------------------
+   NAV INNER CONTAINER
+   ---------------------------------------------------------- */
+.nav__inner {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+/* ----------------------------------------------------------
+   LOGO
+   ---------------------------------------------------------- */
+.nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.nav__logo-img {
+  height: 50px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ----------------------------------------------------------
+   DESKTOP NAV LINKS
+   ---------------------------------------------------------- */
+.nav__links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__link {
+  color: rgba(245, 240, 230, 0.75);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+/* Animated underline via pseudo-element */
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-gold);
+  transition: width var(--transition-base);
+}
+
+.nav__link:hover {
+  color: var(--color-white);
+}
+
+.nav__link:hover::after {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------
+   DESKTOP CTA BUTTON
+   ---------------------------------------------------------- */
+.nav__cta {
+  /* Inherits .btn--gold styles from base.css */
+}
+
+/* ----------------------------------------------------------
+   HAMBURGER MENU TOGGLE
+   ---------------------------------------------------------- */
+.nav__hamburger {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 2;
+}
+
+.nav__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-ivory);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X transformation */
+.nav__hamburger.is-active span:nth-child(1) {
+  transform: rotate(45deg) translateY(7px);
+}
+
+.nav__hamburger.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav__hamburger.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-7px);
+}
+
+/* ----------------------------------------------------------
+   FULL-SCREEN MOBILE MENU OVERLAY
+   ---------------------------------------------------------- */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 19, 17, 0.98);
+  z-index: var(--z-mobile-menu);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Open state */
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile menu links */
+.mobile-menu__links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.mobile-menu__links li {
+  margin-bottom: 1.5rem;
+}
+
+.mobile-menu__links a {
+  color: var(--color-ivory);
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  display: inline-block;
+}
+
+.mobile-menu__links a:hover {
+  color: var(--color-gold);
+}
+
+/* Mobile menu CTA */
+.mobile-menu__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid var(--color-gold);
+  background-color: var(--color-gold);
+  color: var(--color-obsidian);
+  transition: all var(--transition-base);
+}
+
+.mobile-menu__cta:hover {
+  background-color: var(--color-gold-hover);
+  border-color: var(--color-gold-hover);
+  color: var(--color-obsidian);
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVE — Tablet & Mobile (below 1024px)
+   ---------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .nav {
+    height: var(--nav-height-mobile);
+  }
+
+  .nav__logo-img {
+    height: 40px;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__hamburger {
+    display: flex;
+  }
+}

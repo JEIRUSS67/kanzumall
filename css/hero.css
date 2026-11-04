@@ -1,0 +1,304 @@
+/* ============================================================
+   HERO.CSS — Kanzumall Full-Screen Hero Section
+   ============================================================
+   Full-viewport hero with Three.js canvas layer, static
+   fallback with geometric pattern, content overlay, and
+   scroll indicator.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   HERO SECTION CONTAINER
+   ---------------------------------------------------------- */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 1200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-obsidian);
+}
+
+/* ----------------------------------------------------------
+   THREE.JS CANVAS LAYER
+   ---------------------------------------------------------- */
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-hero-canvas);
+}
+
+/* ----------------------------------------------------------
+   STATIC FALLBACK (shown when WebGL unavailable)
+   ---------------------------------------------------------- */
+.hero__fallback {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-hero-canvas);
+  display: none;
+}
+
+.hero__fallback.is-active {
+  display: block;
+}
+
+/* Gradient background layer */
+.hero__fallback-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #151311 0%, #38261D 40%, #151311 100%);
+}
+
+/* Geometric Islamic-inspired pattern layer */
+.hero__fallback-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image:
+    /* Interlocking diagonal lines at 30° */
+    repeating-linear-gradient(
+      30deg,
+      transparent,
+      transparent 20px,
+      rgba(212, 180, 106, 0.5) 20px,
+      rgba(212, 180, 106, 0.5) 21px
+    ),
+    /* Interlocking diagonal lines at 60° */
+    repeating-linear-gradient(
+      60deg,
+      transparent,
+      transparent 20px,
+      rgba(212, 180, 106, 0.5) 20px,
+      rgba(212, 180, 106, 0.5) 21px
+    ),
+    /* Interlocking diagonal lines at 90° */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 20px,
+      rgba(212, 180, 106, 0.5) 20px,
+      rgba(212, 180, 106, 0.5) 21px
+    ),
+    /* Counter-angle at 150° for diamond shapes */
+    repeating-linear-gradient(
+      150deg,
+      transparent,
+      transparent 20px,
+      rgba(212, 180, 106, 0.4) 20px,
+      rgba(212, 180, 106, 0.4) 21px
+    ),
+    /* Horizontal baseline at 120° */
+    repeating-linear-gradient(
+      120deg,
+      transparent,
+      transparent 20px,
+      rgba(212, 180, 106, 0.3) 20px,
+      rgba(212, 180, 106, 0.3) 21px
+    );
+}
+
+/* Fallback product image */
+.hero__fallback-image {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45%;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.hero__fallback-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+/* Directional gradient overlay on the fallback */
+.hero__fallback-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(21, 19, 17, 0.95) 0%,
+    rgba(21, 19, 17, 0.6) 50%,
+    rgba(21, 19, 17, 0.3) 100%
+  );
+  z-index: 3;
+}
+
+/* ----------------------------------------------------------
+   HERO CONTENT
+   ---------------------------------------------------------- */
+.hero__content {
+  position: relative;
+  z-index: var(--z-hero-content);
+  max-width: 700px;
+  padding: 0 var(--container-padding);
+  text-align: left;
+}
+
+/* Brand emblem above the title */
+.hero__brand {
+  margin-bottom: 2rem;
+}
+
+.hero__emblem {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+/* Main hero headline */
+.hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--color-white);
+  margin-bottom: 1.5rem;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+.hero__title-line--accent {
+  color: var(--color-gold);
+  font-style: italic;
+}
+
+/* Subtitle paragraph */
+.hero__subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  color: rgba(245, 240, 230, 0.7);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+}
+
+/* CTA buttons row */
+.hero__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ----------------------------------------------------------
+   SCROLL INDICATOR
+   ---------------------------------------------------------- */
+.hero__scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: var(--z-hero-content);
+}
+
+.hero__scroll-indicator span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(245, 240, 230, 0.4);
+  font-family: var(--font-sans);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-gold), transparent);
+  animation: scroll-line 2s ease-in-out infinite;
+}
+
+/* Scroll line animation */
+@keyframes scroll-line {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  50.1% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVE — Mobile (below 768px)
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero__content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .hero__emblem {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  /* Fallback image adjustments for mobile */
+  .hero__fallback-image {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 70%;
+    max-width: 300px;
+    margin: 0 auto 2rem;
+    opacity: 0.4;
+  }
+
+  /* Switch overlay gradient to vertical for mobile */
+  .hero__fallback-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(21, 19, 17, 0.3),
+      rgba(21, 19, 17, 0.95)
+    );
+  }
+
+  /* Hide scroll indicator on mobile */
+  .hero__scroll-indicator {
+    display: none;
+  }
+}
